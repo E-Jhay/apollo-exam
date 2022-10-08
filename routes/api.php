@@ -22,3 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/random', [RandomController::class, 'index']);
 Route::get('/breakdown', [BreakdownController::class, 'index']);
+Route::post('/store/random', [RandomController::class, 'store']);
+Route::post('/store/breakdown', [BreakdownController::class, 'store']);
+Route::delete('/delete/random', [RandomController::class, 'destroy']);
+Route::delete('/delete/breakdown', [BreakdownController::class, 'destroy']);

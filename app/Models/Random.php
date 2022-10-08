@@ -9,6 +9,8 @@ class Random extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['value'];
+
     //Get the breakdowns for the random
     public function breakdowns()
     {

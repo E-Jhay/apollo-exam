@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Breakdown extends Model
 {
     use HasFactory;
+    protected $fillable = ['value', 'random_id'];
 
     //Get the random for the breakdown
     public function breakdowns()
