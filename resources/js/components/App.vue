@@ -59,6 +59,7 @@ export default {
       }
       this.breakdown = textBreakdown
     },
+    //Add 5-10 items to random table
     async storeRandomData() {
       try {
         const settings = {
@@ -75,8 +76,8 @@ export default {
       } catch (error) {
         console.log(error)
       }
-      
     },
+    //Add 5-10 items to breakdown table
     async storeBreakdownData() {
       try {
         const settings = {
@@ -93,26 +94,8 @@ export default {
       } catch (error) {
         console.log(error)
       }
-      
     },
-    async deleteBreakdownData() {
-      try {
-        const settings = {
-              method: 'DELETE',
-              headers: {
-                  Accept: 'application/json',
-                  'Content-Type': 'application/json',
-                  }
-              }
-        const fetchResponse = await fetch(`http://127.0.0.1:8000/api/delete/breakdown`, settings);
-        const data = await fetchResponse.json();
-        console.log(data)
-        this.fetchBreakdowns()
-      } catch (error) {
-        console.log(error)
-      }
-      
-    },
+    //delete 1-numberOfRows from random dtable
     async deleteRandomData() {
       try {
         const settings = {
@@ -124,12 +107,31 @@ export default {
               }
         const fetchResponse = await fetch(`http://127.0.0.1:8000/api/delete/random`, settings);
         const data = await fetchResponse.json();
-        console.log(data)
+        console.log(data.message)
+        this.fetchRandoms()
         this.fetchBreakdowns()
       } catch (error) {
         console.log(error)
       }
-      
+    },
+    //delete 1-numberOfRows from breakdown dtable
+    async deleteBreakdownData() {
+      try {
+        const settings = {
+              method: 'DELETE',
+              headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json',
+                  }
+              }
+        const fetchResponse = await fetch(`http://127.0.0.1:8000/api/delete/breakdown`, settings);
+        const data = await fetchResponse.json();
+        console.log(data.message)
+        this.fetchRandoms()
+        this.fetchBreakdowns()
+      } catch (error) {
+        console.log(error)
+      }
     },
   },
 

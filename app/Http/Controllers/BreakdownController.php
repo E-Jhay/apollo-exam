@@ -19,27 +19,38 @@ class BreakdownController extends Controller
     public function store(Faker $faker)
     {
         //Generate random items to breakdown table
-        $randomNumber = rand(5, 10);
-        for($i = 0; $i < $randomNumber; $i++){
-            Breakdown::create([
-                'value' => $faker->regexify('[A-Za-z0-9]{5}'),
-                'random_id' => Random::all()->random()->id,
+        $count = Breakdown::count();
+        //Add items to database if number of rows is less than 75
+        if($count < 75){
+            $randomNumber = rand(5, 10);
+            for($i = 0; $i < $randomNumber; $i++){
+                Breakdown::create([
+                    'value' => $faker->regexify('[A-Za-z0-9]{5}'),
+                    'random_id' => Random::all()->random()->id,
+                ]);
+            }
+
+            return response()->json([
+                'message' => $randomNumber. ' Breakdowns added successfully'
             ]);
         }
 
         return response()->json([
-            'message' => 'Breakdowns added successfull'
+            'message' => 'No more space for adding items'
         ]);
     }
     //Delete Breakdown data
     public function destroy()
     {
-        //Delete random items to breakdown table
-        $random_number_array = range(5, 10);
-        shuffle($random_number_array );
-        $random_number_array = array_slice($random_number_array ,0,10);
-        Breakdown::whereIn('id', $random_number_array)->delete();
+        //Delete 1 - numberOfRows items to breakdown table
+        $count = Breakdown::count();
+        $randomNumber = rand(1, ($count < 15) ? $count : 15);
+        Breakdown::inRandomOrder()
+            ->limit($randomNumber)
+            ->delete();
 
-        return $random_number_array;
+        return response()->json([
+            'message' => $randomNumber. ' rows deleted from breakdown table'
+        ]);
     }
 }

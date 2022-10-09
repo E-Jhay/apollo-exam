@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('breakdowns', function (Blueprint $table) {
             $table->id();
             $table->string('value');
-            $table->foreignId('random_id')->constrained();
+            $table->foreignId('random_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

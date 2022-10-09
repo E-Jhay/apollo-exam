@@ -18,27 +18,38 @@ class RandomController extends Controller
     public function store(Faker $faker)
     {
         //Generate random items to random table
-        $randomNumber = rand(5, 10);
-        for($i = 0; $i < $randomNumber; $i++){
-            Random::create([
-                'value' => $faker->name,
+        $count = Random::count();
+        //Add items to database if number of rows is less than 75
+        if($count < 75){
+            $randomNumber = rand(5, 10);
+            for($i = 0; $i < $randomNumber; $i++){
+                Random::create([
+                    'value' => $faker->word,
+                ]);
+            }
+
+            return response()->json([
+                'message' => $randomNumber. ' Randoms added successfully'
             ]);
         }
 
         return response()->json([
-            'message' => 'Randoms added successfull'
+            'message' => 'No more space for adding items'
         ]);
     }
 
     //Delete Breakdown data
     public function destroy()
     {
-        //Delete random items to breakdown table
-        $random_number_array = range(5, 10);
-        shuffle($random_number_array );
-        $random_number_array = array_slice($random_number_array ,0,10);
-        $sample = Random::where('id',1)->delete();
+        //Delete 1 - numberOfRows items to random table
+        $count = Random::count();
+        $randomNumber = rand(1, ($count < 15) ? $count : 15);
+        Random::inRandomOrder()
+            ->limit($randomNumber)
+            ->delete();
 
-        return $sample;
+        return response()->json([
+            'message' => $randomNumber. ' rows deleted from random table'
+        ]);
     }
 }

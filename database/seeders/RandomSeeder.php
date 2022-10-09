@@ -20,7 +20,7 @@ class RandomSeeder extends Seeder
         $randomNumber = rand(5, 10);
         for($i = 0; $i < $randomNumber; $i++){
             Random::create([
-                'value' => $faker->name,
+                'value' => $faker->word,
             ]);
         }
     }

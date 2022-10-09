@@ -21,10 +21,18 @@ export default {
         /* background-color: rgb(20, 20, 20); */
         border-radius: 5px;
         transition: all 320ms ease-in;
-        font-weight: 600;
+        font-size: .6rem;
+        font-weight: 400;
     }
 
     button:hover {
         transform: scale(1.1);
+    }
+
+    @media (min-width: 850px){
+        button {
+            font-size: .8rem;
+            font-weight: 600;
+        }
     }
 </style>
